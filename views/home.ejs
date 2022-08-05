@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paradox Studios</title>
+  <link rel="icon" href="./assets/icons/headphones.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="CSS/style.css" />
+  <link rel="stylesheet" href="CSS/style1.css" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="left-header">
+      <div class="logo"><a href="./music_player.html"><img src="./assets/icons/headphones.png"></a></div>
+
+      <div class="favourites-col"><a href="#">My Favourites</a></div>
+    </div>
+
+    <div class="right-header">
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <form action="">
+          <input type="text" class="search-box" placeholder="Search" />
+        </form>
+        <i class="fa-solid fa-microphone"></i>
+      </div>
+
+      <div class="notification-icon"><i class="fa-solid fa-bell"></i></div>
+
+      <div class="profile-icon"><i class="fa-solid fa-user"></i></div>
+    </div>
+  </header>
+
+  <div class="container">
+    <main class="main">
+      <!-- <marquee Scrollamount="15" bgcolor="darkblue" loop="" direction="right">
+        
+      </marquee> -->
+
+      <div class="showcase-albums">
+        <a href="album_alan_walker.html" class="album album1"></a>
+        <a href="" class="album album2"></a>
+        <a href="" class="album album3"></a>
+        <a href="" class="album album4"></a>
+        <a href="" class="album album2"></a>
+        <a href="" class="album album3"></a>
+        <a href="" class="album album4"></a>
+      </div>
+
+      <div class="showcase-latest-release">
+        <div class="showcase-heading">
+          <h3>Latest Releases</h3>
+        </div>
+        <div class="release-content">
+          <div class="latest-release">
+            <div class="release-image">
+              <i class="fa-solid fa-circle-play"></i>
+              <!-- <i class="fa-solid fa-circle-play" ></i> -->
+            </div>
+            <div class="release-option">
+              <!-- <i class="fa fa-share-alt" aria-hidden="true"></i><br>
+              <i class="fa fa-heart" aria-hidden="true"></i><br>
+              <i class="fa fa-plus" aria-hidden="true"></i> -->
+              <i class="fa fa-bars" aria-hidden="true">
+                <div class="release-menu">
+                  <div>Play Now</div>
+                  <div>Add to Queue</div>
+                  <div>Add to Favourites</div>
+                  <div>Get Info</div>
+                </div>
+              </i>
+              <p>4:43</p>
+            </div>
+          </div>
+          <div class="latest-release">
+            <div class="release-image">
+              <i class="fa-solid fa-circle-play"></i>
+              <!-- <audio controls>
+                <source src="./shekhar.mp3" type="audio/mp3">
+              </audio> -->
+            </div>
+            <div class="release-option">
+              <!-- <i class="fa fa-share-alt" aria-hidden="true"></i><br>
+              <i class="fa fa-heart" aria-hidden="true"></i><br>
+              <i class="fa fa-plus" aria-hidden="true"></i> -->
+              <i class="fa fa-bars" aria-hidden="true">
+                <div class="release-menu">
+                  <div>Play Now</div>
+                  <div>Add to Queue</div>
+                  <div>Add to Favourites</div>
+                  <div>Get Info</div>
+                </div>
+              </i>
+              <p>4:43</p>
+            </div>
+          </div>
+          <div class="latest-release">
+            <div class="release-image">
+              <i class="fa-solid fa-circle-play"></i>
+              <!-- <i class="fa-solid fa-circle-play" ></i> -->
+            </div>
+            <div class="release-option">
+              <!-- <i class="fa fa-share-alt" aria-hidden="true"></i><br>
+              <i class="fa fa-heart" aria-hidden="true"></i><br>
+              <i class="fa fa-plus" aria-hidden="true"></i> -->
+              <i class="fa fa-bars" aria-hidden="true">
+                <div class="release-menu">
+                  <div>Play Now</div>
+                  <div>Add to Queue</div>
+                  <div>Add to Favourites</div>
+                  <div>Get Info</div>
+                </div>
+              </i>
+              <p>4:43</p>
+            </div>
+          </div>
+          <div class="latest-release">
+            <div class="release-image">
+              <i class="fa-solid fa-circle-play"></i>
+              <!-- <i class="fa-solid fa-circle-play" onclick="changeBtn()"></i> -->
+            </div>
+            <div class="release-option">
+              <!-- <i class="fa fa-share-alt" aria-hidden="true"></i><br>
+              <i class="fa fa-heart" aria-hidden="true"></i><br>
+              <i class="fa fa-plus" aria-hidden="true"></i> -->
+              <i class="fa fa-bars" aria-hidden="true">
+                <div class="release-menu">
+                  <div>Play Now</div>
+                  <div>Add to Queue</div>
+                  <div>Add to Favourites</div>
+                  <div>Get Info</div>
+                </div>
+              </i>
+              <p>4:43</p>
+            </div>
+            <!-- <div id="hidden-options">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid, similique.
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase-popular-artists">
+        <div class="showcase-heading">
+          <h3>Popular Artists</h3>
+        </div>
+        <div class="popular-artists-content">
+          <div class="popular-artist artist1">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+          <div class="popular-artist artist2">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+          <div class="popular-artist artist3">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+          <div class="popular-artist artist4">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+          <div class="popular-artist artist5">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+          <div class="popular-artist artist6">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+          <div class="popular-artist artist7">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+          <div class="popular-artist artist8">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+          <div class="popular-artist artist9">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+          <div class="popular-artist artist10">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+          <div class="popular-artist artist11">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+          <div class="popular-artist artist12">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+          <div class="popular-artist artist13">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+          <div class="popular-artist artist14">
+            <i class="fa-solid fa-circle-play"></i>
+            <p>A R Rahman</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase-radio-stations">
+        <div class="showcase-heading">
+          <h3>Radio Stations</h3>
+        </div>
+
+        <div class="radio-stations-content">
+          <div class="station"></div>
+          <div class="radios">
+            <div class="radio radio2">
+              <i class="fa-solid fa-circle-play"></i>
+            </div>
+            <div class="radio radio1">
+              <i class="fa-solid fa-circle-play"></i>
+            </div>
+            <div class="radio radio3">
+              <i class="fa-solid fa-circle-play"></i>
+            </div>
+            <div class="radio radio4">
+              <i class="fa-solid fa-circle-play"></i>
+            </div>
+            <div class="radio radio5">
+              <i class="fa-solid fa-circle-play"></i>
+            </div>
+            <div class="radio radio6">
+              <i class="fa-solid fa-circle-play"></i>
+            </div>
+            <div class="radio radio7">
+              <i class="fa-solid fa-circle-play"></i>
+            </div>
+            <div class="radio radio8">
+              <i class="fa-solid fa-circle-play"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="showcase-music-genres">
+        <div class="showcase-heading">
+          <h3>Music Genres</h3>
+        </div>
+        <div class="music-genres-content">
+          <div class="genre">
+            <div class="genre-image genre1">
+              <span>Hip-Hop</span>
+            </div>
+          </div>
+          <div class="genre">
+            <div class="genre-image genre2">
+              <span>Jazz</span>
+            </div>
+          </div>
+          <div class="genre">
+            <div class="genre-image genre3">
+              <span>Rock</span>
+            </div>
+          </div>
+          <div class="genre">
+            <div class="genre-image genre4">
+              <span>Road Trip</span>
+            </div>
+          </div>
+          <div class="genre">
+            <div class="genre-image genre5">
+              <span>Pop Music</span>
+            </div>
+          </div>
+          <div class="genre">
+            <div class="genre-image genre6">
+              <span>Electronic Dance Music</span>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="showcase-english"></div>
+
+      <div class="showcase-hindi"></div>
+
+      <div class="bottom-space"></div>
+
+
+
+    </main>
+
+
+    <div class="bottom-player">
+
+      <div class="song-playing">
+        <div class="song-image"></div>
+        <div class="song-details">
+          <div class="song-name">
+            Faded
+          </div>
+          <div class="song-artists">
+            Song Artists
+          </div>
+        </div>
+      </div>
+
+
+      <div class="player-controls">
+        <i class="fa fa-step-backward"></i>
+        <div class="play-pause">
+          <i class="fa-solid fa-circle-play"></i>
+          <i class="fa-solid fa-circle-pause"></i>
+        </div>
+        <i class="fa fa-step-forward"></i>
+      </div>
+
+
+      <div class="player-options">
+        <div class="current-time">00:00</div>
+        <p>/</p>
+        <div class="song-duration">00:00</div>
+        <div class="volume">
+          <i class="fa fa-volume-up"></i>
+          <input class="volume-slider" type="range" value="50" min="0" max="100">
+        </div>
+      </div>
+
+      <input class="time-slider" type="range" value="0" min="0" max="100">
+    </div>
+
+
+    <div id="song-template">
+      <div class="song">
+        <div class="song-info">
+          <div class="song-image"><i class="fa-solid fa-circle-play"></i>
+            <i class="fa-solid fa-circle-pause"></i></div>
+          <div class="song-details">
+            <div class="song-name">
+              Faded
+            </div>
+            <div class="song-artists">
+              Song Artists
+            </div>
+          </div>
+        </div>
+
+        <div class="song-options">
+          <i class="fa fa-heart-o" aria-hidden="true"></i>
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+
+    <aside class="aside">
+      <div class="aside-content">
+
+        <div class="queue">
+
+          <div class="showcase-heading">
+            <h3>Queue</h3>
+          </div>
+
+          <div class="queue-songs">
+
+            <!-- <div class="song faded">
+              <div class="song-info">
+                <div class="song-num">
+                  <p>01</p>
+                </div>
+                <div class="song-image"></div>
+                <div class="song-name">
+                  Faded
+                </div>
+              </div>
+
+              <div class="song-options">
+                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                <i class="fa fa-plus" aria-hidden="true"></i>
+              </div>
+            </div> -->
+
+
+
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+
+</html>
