@@ -1,3 +1,5 @@
+const User = require('../models/user');
+
 module.exports.profile = (req, res) => {
     return res.render('user_profile');
 }
@@ -15,7 +17,28 @@ module.exports.create_session = (req, res) => {
     return res.redirect('back');
 }
 
-module.exports.create = (req, res) => {
-    console.log("Signed Up ---> ", req.body);
+module.exports.create = async (req, res) => {
+    try {
+
+        if(req.body.password != req.body.confirm_password){
+            console.log("Password does not match");
+            return res.redirect('back');
+        }else{
+            let user = await User.findOne({email: req.body.email});
+            if(!user){
+                let user = await User.create(req.body);
+                console.log("Sign Up successfull");
+                return res.redirect('/users/sign-in');
+            }else{
+                console.log("User already exists");
+                return res.redirect('back');
+            }
+        }
+        
+    } catch (err) {
+        console.log("Error in signing up ---> ", err);
+    }
+    
+    
     return res.redirect('back');
 }
