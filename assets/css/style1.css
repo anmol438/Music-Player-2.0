@@ -1,0 +1,205 @@
+/* Alan Walker */
+
+.album-description {
+  /* border: 1px solid red; */
+  height: 17.5vw;
+  width: 100%;
+  min-height: 200px;
+  /* background-color: #1b205ee6; */
+  background-color: var(--theme-color6);
+  margin: 10px 0px;
+  overflow: hidden;
+  box-shadow: 0px 0px 30px 10px var(--theme-color6);
+
+  display: flex;
+}
+
+.album-image {
+  /* border: 1px solid red; */
+  width: 25%;
+  min-width: 200px;
+  height: 100%;
+
+  /* display: inline-block; */
+  background-image: linear-gradient(transparent, transparent, #1b205ee6 120%), url(/images/album-thumbnail/alan-walker.jpeg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  /* flex-shrink: 0; */
+  opacity: 0.8;
+  overflow: visible;
+}
+
+.album-image:hover {
+  /* color: #255784; */
+  /* background: #2196f3; */
+  box-shadow: 0px 0px 10px #2196f3, 0px 0px 40px #2196f3, 0px 0px 10px #2196f3, 0px 0px 10px #2196f3;
+}
+
+.album-content {
+  /* border: 1px solid red; */
+  height: 100%;
+  width: 75%;
+  padding: 0px 5%;
+  /* display: inline-block; */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.song-list {
+  /* border: 1px solid red; */
+  height: 55%;
+  /* width: 100%; */
+  margin: 10px 0px;
+
+}
+
+.song {
+  /* border: 1px solid black; */
+  /* height: 80px; */
+  width: 100%;
+  margin: 10px 0px;
+  /* background-color: #272c58e6; */
+  background-color: var(--theme-color11);
+  padding: 5px 10px;
+  display: flex;
+  justify-content: space-between;
+  /* align-items: center; */
+  transition: 0.5s;
+
+}
+
+.song:hover {
+  /* color: #255784; */
+  /* background: #2196f3; */
+  box-shadow: 0px 0px 10px #2196f3, 0px 0px 40px #2196f3, 0px 0px 10px #2196f3, 0px 0px 10px #2196f3;
+}
+
+.song-info {
+  /* border: 1px solid red; */
+  /* height: 100%; */
+  width: 70%;
+  padding: 0px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  cursor: pointer;
+}
+
+
+.song-image {
+  /* border: 1px solid red; */
+  height: 60px;
+  width: 60px;
+  background-image: url(/images/album-thumbnail/alan-walker.jpeg);
+  background-size: contain;
+  margin: 0px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.song .fa-circle-play,
+.song .fa-circle-pause {
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.song .fa-circle-pause {
+  display: none;
+}
+
+.song .song-info:hover .song-image {
+  background-image: linear-gradient(to top, black, transparent), url(/images/album-thumbnail/alan-walker.jpeg);
+  transition: all 2s;
+}
+
+.song .song-info:hover .fa-circle-play {
+  opacity: 1;
+  transition: all 0.5s;
+}
+
+
+/* display-icon added dynamically using js */
+.playing .song-image{ 
+  background-image: linear-gradient(to top, black, transparent), url(/images/album-thumbnail/alan-walker.jpeg);
+}
+.playing .fa-circle-play{
+  display: none;
+  opacity: 1;
+}
+.playing .fa-circle-pause{
+  display: none;
+  opacity: 1;
+}
+
+.song-list .song-details{
+  /* border: 1px solid black; */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+
+  position: relative;
+}
+
+
+.song-list .song-name {
+  /* border: 1px solid red; */
+  /* padding-top: 20px; */
+}
+
+.song-artists{
+  display: none;
+}
+
+.song-list .song-artists{
+  display: block;
+  /* border: 1px solid red; */
+  position: absolute;
+  left: 50%;
+  /* margin-left: 100px; */
+}
+
+.song-options {
+  /* border: 1px solid red; */
+  padding-top: 25px;
+  padding-left: 25px;
+  padding: 25px;
+}
+
+.song-options i {
+  font-size: 10px;
+  /* color: white; */
+  padding: 5px;
+  margin: auto;
+}
+
+.similar-artists {
+  /* border: 1px solid red; */
+  height: 40%;
+  width: 100%;
+}
+
+.similar-artists-content {
+  /* border: 2px solid black; */
+  height: 89%;
+  margin-top: 15px;
+}
+
+.recently-played {
+  /* border: 1px solid red; */
+  height: 58%;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.recently-played-content {
+  /* border: 2px solid black; */
+  margin-top: 15px;
+  height: 92%;
+}
