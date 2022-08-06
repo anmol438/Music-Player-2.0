@@ -5,6 +5,7 @@ const db = require('./config/mongoose');
 
 const passport = require('passport');
 const passportLocal = require('./config/passport_local_strategy');
+const session = require('express-session');
 
 
 const app = express();
@@ -20,7 +21,17 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 app.set('layout', './layouts/layout');
 
-
+app.use(
+    session({
+        name:'paradoxio',
+        secret:'paradoxio',
+        resave:false,
+        saveUninitialized:false,
+        cookie:{
+            maxAge: (1000*60)*30
+        }
+    })
+);
 
 
 app.use('/',  require('./routes/index'));

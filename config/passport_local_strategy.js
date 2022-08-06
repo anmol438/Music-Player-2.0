@@ -15,7 +15,7 @@ passport.use(new localStrategy(
                 console.log("Invalid username/password");
                 return done(null, false);
             }
-
+            
             return done(null, user);
 
         } catch (err) {
@@ -24,3 +24,26 @@ passport.use(new localStrategy(
         }
     }
 ));
+
+passport.serializeUser((user, done) => {
+    done(null, {
+        id: user.id,
+        email: user.email,
+        name: user.name
+    });
+});
+
+passport.deserializeUser((user, done) => {
+    User.findById(user.id, (err, user) => {
+        if(err){
+            console.log("Error in finding user while passport deserializing ---> ", err);
+            return done(err);
+        }
+
+        return done(null, user);
+    });
+});
+
+
+
+module.exports = passport;

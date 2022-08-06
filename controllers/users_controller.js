@@ -13,7 +13,7 @@ module.exports.sign_up = (req, res) => {
 }
 
 module.exports.create_session = (req, res) => {
-    console.log("Logged In ---> ", req.body);
+    console.log("Logged In Successfully");
     return res.redirect('back');
 }
 
