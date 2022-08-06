@@ -4,18 +4,18 @@ const User = require('../models/user');
 
 passport.use(new localStrategy(
     {
-        usernameField:'email',
-        passReqToCallback:true
+        usernameField: 'email',
+        passReqToCallback: true
     },
 
     async (req, email, password, done) => {
         try {
-            let user = await User.findOne({email:email});
-            if(!user || user.password != password){
+            let user = await User.findOne({ email: email });
+            if (!user || user.password != password) {
                 console.log("Invalid username/password");
                 return done(null, false);
             }
-            
+
             return done(null, user);
 
         } catch (err) {
@@ -35,7 +35,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((user, done) => {
     User.findById(user.id, (err, user) => {
-        if(err){
+        if (err) {
             console.log("Error in finding user while passport deserializing ---> ", err);
             return done(err);
         }
@@ -44,6 +44,19 @@ passport.deserializeUser((user, done) => {
     });
 });
 
+passport.check_auth = (req, res, next) => {
+    if (req.isAuthenticated) {
+        return next();
+    }
+    return res.redirect('users/sign-in');
+};
+
+passport.set_auth_user = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        res.locals.user = req.user;
+    }
+    return next();
+};
 
 
 module.exports = passport;
