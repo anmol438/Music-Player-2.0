@@ -37,8 +37,6 @@ module.exports.create = async (req, res) => {
         
     } catch (err) {
         console.log("Error in signing up ---> ", err);
+        return res.redirect('back');
     }
-    
-    
-    return res.redirect('back');
 }

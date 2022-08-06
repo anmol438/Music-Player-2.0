@@ -3,6 +3,9 @@ const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
 
+const passport = require('passport');
+const passportLocal = require('./config/passport_local_strategy');
+
 
 const app = express();
 
