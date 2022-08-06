@@ -14,8 +14,27 @@
         <i class="fa-solid fa-microphone"></i>
       </div>
 
-      <div class="notification-icon"><i class="fa-solid fa-bell"></i></div>
 
-      <div class="profile-icon"><i class="fa-solid fa-user"></i></div>
+      <div class="profile-icon">
+        <a
+          <% if(locals.user){ %>  
+            href="/users/profile/"
+          <% }else{ %>
+            href="/users/sign-in/"
+          <% } %>  
+          >
+          <i class="fa-solid fa-user"></i>
+          </a>
+      </div>
+
+      <% if(locals.user){ %> 
+        <div class="sign-out-icon">
+          <a href="/users/sign-out/">
+            <i class="fa fa-sign-out" aria-hidden="true"></i>
+          </a>
+        </div>
+      <% } %> 
+
+
     </div>
   </header>
