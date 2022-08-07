@@ -1,7 +1,10 @@
-const songs = require('../../../models/api/v1/song_list');
+const data = require('../../../models/api/v1/track_data');
 
 module.exports.song = (req, res) => {
-    console.log(songs);
-    return res.redirect('back');
-    // return res.status(200).json(songs.song_list);
+    if(req.xhr){
+        return res.status(200).json({
+            data:data,
+            message:"succes"
+        });
+    }
 }
