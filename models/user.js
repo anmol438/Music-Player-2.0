@@ -15,7 +15,22 @@ const userSchema = new mongoose.Schema(
         name:{
             type: String,
             required: true
-        }
+        },
+        recently_played:[
+            {
+                type:String,
+            }
+        ],
+        queued:[
+            {
+                type:String,
+            }
+        ],
+        favourites:[
+            {
+                type:String,
+            }
+        ],
     },
     {
         timestamps: true

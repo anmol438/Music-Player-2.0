@@ -20,5 +20,7 @@ router.get('/sign-out', users_controller.destroy_session);
 
 router.use('/api', require('./api'));
 
+router.use('/songs', require('./songs'));
+
 
 module.exports = router;

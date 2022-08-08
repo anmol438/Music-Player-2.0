@@ -45,10 +45,11 @@ passport.deserializeUser((user, done) => {
 });
 
 passport.check_auth = (req, res, next) => {
-    if (req.isAuthenticated) {
+    if (req.isAuthenticated()) {
+        console.log('check')
         return next();
     }
-    return res.redirect('users/sign-in');
+    return res.redirect('/users/sign-in');
 };
 
 passport.set_auth_user = (req, res, next) => {
