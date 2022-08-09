@@ -13,7 +13,7 @@ module.exports.post_recently_played = async (req, res) => {
             let song = req.body.song;
             let user = await User.findById(req.user._id);
             await user.updateOne({$pull:{recently_played:song}});
-            await user.updateOne({$push:{recently_played:song}});
+            await user.updateOne({$push:{recently_played:song}});            
             
             return res.status(200).json({
                done:true,
@@ -52,4 +52,52 @@ module.exports.get_recently_played = async (req, res) => {
         }
         
     }
-}
+};
+
+module.exports.post_queued = async (req, res) => {
+    if(req.xhr){
+        if(req.isAuthenticated()){
+            let song_list = req.body.song_list;
+            let user = await User.findById(req.user._id);
+            for(let [key, song] of Object.entries(song_list)){
+                await user.updateOne({$pull:{queued:song.id}});
+                await user.updateOne({$push:{queued:song.id}});
+            }
+            return res.status(200).json({
+               done:true,
+               queued:user.queued
+            });
+        }else{
+            return res.status(200).json({
+                done:false
+            });
+        }
+        
+    }
+};
+
+module.exports.get_queued = async (req, res) => {
+    if(req.xhr){
+        if(req.isAuthenticated()){
+            let user = await User.findById(req.user._id);
+            let queued = user.queued;
+            let data = [];
+            for(let song_id of queued){
+                for(let album in track_data){
+                    if(track_data[album].song_list.hasOwnProperty(song_id)){
+                        data.push(track_data[album].song_list[song_id]);
+                    }
+                }
+            }            
+            return res.status(200).json({
+               done:true,
+               queued:data
+            });
+        }else{
+            return res.status(200).json({
+                done:false
+            });
+        }
+        
+    }
+};

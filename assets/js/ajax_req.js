@@ -6,16 +6,19 @@
         type:'get',
         url:'/users/api/v1/song-list',
         success:(data) => {
-            // console.log(album_id)
             let album = data.data[album_id];
-            console.log(album)
             song_list = album.song_list;
-            // console.log(song_list);
-            // let song_container = $('#song-container');
-            // console.log(song_container)
             create_album_dom(album);
             for(let [key, song] of Object.entries(song_list)){
-                create_song_tab(song);  
+                let song_dom = create_song_dom(song);
+                $('#song-container').append(song_dom);
+                $(`#song-container #song-${song.id} .song-info`).click((e) => {
+                    if(prev_song != song.id){
+                        add_to_queue(song_list);
+                    }
+                    play_song(song);
+                    
+                });  
             }
         },
         error:(error) => {
@@ -23,26 +26,7 @@
         }
     });
 
-    $.ajax({
-        type:'get',
-        url:'/users/songs/recently-played',
-        success:(data) => {
-            if(data.done){
-                for(let song of data.recently_played){
-                    let song_dom = create_song_dom(song);
-                    $('.recently-played-content').append(song_dom);
-                    $(`.recently-played-content #song-${song.id} .song-info`).click((e) => {
-                        play_song(song);
-                    });
-                }
-            }else{
-
-            }
-        },
-        error:(error) => {
-            console.log(error.responseText);
-        }
-    });
+    
 
     let create_album_dom = (album) => {
         let album_container = $('.album-description');
@@ -88,13 +72,6 @@
         `);
     }
 
-    let create_song_tab = (song) => {
-        let song_dom = create_song_dom(song);
-        $('#song-container').append(song_dom);
-        $(`#song-container #song-${song.id} .song-info`).click((e) => {
-            play_song(song);
-        });
-    }
 
     let add_to_recently_played = (curr_song) => {
         $.ajax({
@@ -102,7 +79,6 @@
             url:'/users/songs/recently-played',
             data:{song:curr_song.id},
             success:(data)=>{
-                console.log(data.done);
                 if(data.done){
                     $(`.recently-played-content #song-${curr_song.id}`).remove();
                     let song_dom = create_song_dom(curr_song);
@@ -119,6 +95,71 @@
             }
         });
     }
+
+    $.ajax({
+        type:'get',
+        url:'/users/songs/recently-played',
+        success:(data) => {
+            if(data.done){
+                for(let song of data.recently_played){
+                    let song_dom = create_song_dom(song);
+                    $('.recently-played-content').append(song_dom);
+                    $(`.recently-played-content #song-${song.id} .song-info`).click((e) => {
+                        play_song(song);
+                    });
+                }
+            }else{
+
+            }
+        },
+        error:(error) => {
+            console.log(error.responseText);
+        }
+    });
+
+    let add_to_queue = (song_list) => {
+        $.ajax({
+            type:'post',
+            url:'/users/songs/queued',
+            data:{song_list:song_list},
+            success: (data) => {
+                console.log('fsfs')
+                for(let [key, song] of Object.entries(song_list)){
+                    $(`.queue-songs #song-${song.id}`).remove();
+                    let song_dom = create_song_dom(song);
+                    $('.queue-songs').append(song_dom);
+                    $(`.queue-songs #song-${song.id} .song-info`).click((e) => {
+                        play_song(song);
+                    });
+                }
+                
+            },
+            error:(error) => {
+                console.log("Error in queue ---> ", error);
+            }
+        });
+    }
+
+    $.ajax({
+        type:'get',
+        url:'/users/songs/queued',
+        success:(data) => {
+            if(data.done){
+                for(let song of data.queued){
+                    let song_dom = create_song_dom(song);
+                    $('.queue-songs').append(song_dom);
+                    $(`.queue-songs #song-${song.id} .song-info`).click((e) => {
+                        play_song(song);
+                    });
+                }
+            }else{
+
+            }
+        },
+        error:(error) => {
+            console.log(error.responseText);
+        }
+    });
 
     let play_song = async (curr_song) => {
         var player_play = document.querySelector(".bottom-player .fa-circle-play");
@@ -191,6 +232,8 @@
 
         }
         prev_song = curr_song.id;
+        return;
+        
     }
 
     let update_player = (curr_song) => {
