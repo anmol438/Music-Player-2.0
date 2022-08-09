@@ -15,10 +15,29 @@
             // console.log(song_container)
             create_album_dom(album);
             for(let [key, song] of Object.entries(song_list)){
-                create_song_tab(song);
-                
+                create_song_tab(song);  
             }
-        
+        },
+        error:(error) => {
+            console.log(error.responseText);
+        }
+    });
+
+    $.ajax({
+        type:'get',
+        url:'/users/songs/recently-played',
+        success:(data) => {
+            if(data.done){
+                for(let song of data.recently_played){
+                    let song_dom = create_song_dom(song);
+                    $('.recently-played-content').append(song_dom);
+                    $(`.recently-played-content #song-${song.id} .song-info`).click((e) => {
+                        play_song(song);
+                    });
+                }
+            }else{
+
+            }
         },
         error:(error) => {
             console.log(error.responseText);
@@ -72,11 +91,8 @@
     let create_song_tab = (song) => {
         let song_dom = create_song_dom(song);
         $('#song-container').append(song_dom);
-
-        $(`#song-${song.id} .song-info`).click((e) => {
-            play_song(song.id);
-
-            
+        $(`#song-container #song-${song.id} .song-info`).click((e) => {
+            play_song(song);
         });
     }
 
@@ -84,9 +100,19 @@
         $.ajax({
             type:'post',
             url:'/users/songs/recently-played',
-            data:{song:curr_song},
+            data:{song:curr_song.id},
             success:(data)=>{
-                console.log(data);
+                console.log(data.done);
+                if(data.done){
+                    $(`.recently-played-content #song-${curr_song.id}`).remove();
+                    let song_dom = create_song_dom(curr_song);
+                    $('.recently-played-content').append(song_dom);
+                    $(`.recently-played-content #song-${curr_song.id} .song-info`).click((e) => {
+                        play_song(curr_song);
+                    });
+                }else{
+
+                }
             },
             error:(error) => {
                 console.log("Error in recently played ---> ", error);
@@ -94,24 +120,24 @@
         });
     }
 
-    let play_song = (curr_song) => {
+    let play_song = async (curr_song) => {
         var player_play = document.querySelector(".bottom-player .fa-circle-play");
         var player_pause = document.querySelector(".bottom-player .fa-circle-pause");
 
         var song_play = document.querySelectorAll(".playing .fa-circle-play");
         var song_pause = document.querySelectorAll(".playing .fa-circle-pause");
 
-        // var song = document.querySelectorAll('.'+curr_song);
+        // var song = document.querySelectorAll('.'+curr_song.id);
         // for(let i=0; i<song.length; i++){
         //     song[i].classList.add('playing');
         // }
 
-        if (prev_song == curr_song) {
+        if (prev_song == curr_song.id) {
 
 
-            // console.log(curr_song)
+            // console.log(curr_song.id)
             if (song_track.paused) {
-                song_track.play();
+                await song_track.play();
                 player_pause.style.display = 'block';
                 player_play.style.display = 'none';
 
@@ -133,19 +159,19 @@
             }
         } else {
             // song_track.pause();
-            song_track.src = song_list[curr_song].path;
-            song_track.play();
+            song_track.src = curr_song.path;
+            await song_track.play();
 
             update_player(curr_song);
 
             add_to_recently_played(curr_song);
-            // add_to_queue(curr_song);
+            // add_to_queue(curr_song.id);
 
             player_pause.style.display = 'block';
             player_play.style.display = 'none';
 
             var prev_play = document.querySelectorAll('.' + prev_song);
-            var curr_play = document.querySelectorAll('.' + curr_song);
+            var curr_play = document.querySelectorAll('.' + curr_song.id);
             for (let i = 0; i < prev_play.length; i++) {
                 prev_play[i].classList.remove('playing');
             }
@@ -164,7 +190,7 @@
 
 
         }
-        prev_song = curr_song;
+        prev_song = curr_song.id;
     }
 
     let update_player = (curr_song) => {
@@ -183,7 +209,7 @@
         time_slider.value = 0;
 
 
-        song_name.textContent = song_list[curr_song].name;
+        song_name.textContent = curr_song.name;
         // song_img.style.background_image = "";
 
 
@@ -219,7 +245,7 @@
     }
 
     var prev_song = null;
-    var curr_song = null;
+    // var curr_song.id = null;
     var song_track = new Audio("");
     var timer;
 }
