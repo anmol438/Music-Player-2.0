@@ -4,6 +4,7 @@ const track_data = require('../models/api/v1/track_data');
 module.exports.playlist =  (req, res) => {
     return res.render('song_playlist', {
         album:req.params.album,
+        title:'Playlist'
     });
 };
 
@@ -92,6 +93,54 @@ module.exports.get_queued = async (req, res) => {
             return res.status(200).json({
                done:true,
                queued:data
+            });
+        }else{
+            return res.status(200).json({
+                done:false
+            });
+        }
+        
+    }
+};
+
+module.exports.post_favourites = async (req, res) => {
+    if(req.xhr){
+        if(req.isAuthenticated()){
+            let song = req.body.song;
+            let user = await User.findById(req.user._id);
+            if(user.favourites.findIndex((element) => {
+                return (song==element);
+            }) == -1){
+                await user.updateOne({$push:{favourites:song}});  
+                return res.status(200).json({
+                    done:true,
+                    favourites:user.favourites
+                 });          
+            }
+        }
+            return res.status(200).json({
+                done:false
+            });
+        
+    }
+};
+
+module.exports.get_favourites = async (req, res) => {
+    if(req.xhr){
+        if(req.isAuthenticated()){
+            let user = await User.findById(req.user._id);
+            let favourites = user.favourites;
+            let data = [];
+            for(let song_id of favourites){
+                for(let album in track_data){
+                    if(track_data[album].song_list.hasOwnProperty(song_id)){
+                        data.push(track_data[album].song_list[song_id]);
+                    }
+                }
+            }            
+            return res.status(200).json({
+               done:true,
+               favourites:data
             });
         }else{
             return res.status(200).json({

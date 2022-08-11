@@ -1,7 +1,10 @@
 const User = require('../models/user');
+// const views = require('../views');
 
 module.exports.profile = (req, res) => {
-    return res.render('user_profile');
+    if(req.xhr){
+        return res.send('user_profile');
+    }
 }
 
 module.exports.sign_in = (req, res) => {

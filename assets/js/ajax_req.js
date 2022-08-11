@@ -17,8 +17,14 @@
                         add_to_queue(song_list);
                     }
                     play_song(song);
-                    
-                });  
+                });
+                $(`#song-container #song-${song.id} .song-options .fa-plus`).click((e) => {
+                    add_to_queue({song:song});
+                });
+                $(`#song-container #song-${song.id} .song-options .fa-heart-o`).click((e) => {
+                    add_to_fav(song);
+                })
+
             }
         },
         error:(error) => {
@@ -86,6 +92,9 @@
                     $(`.recently-played-content #song-${curr_song.id} .song-info`).click((e) => {
                         play_song(curr_song);
                     });
+                    $(`.recently-played-content #song-${curr_song.id} .song-options .fa-plus`).click((e) => {
+                        add_to_queue({song:curr_song});
+                    });
                 }else{
 
                 }
@@ -107,6 +116,9 @@
                     $(`.recently-played-content #song-${song.id} .song-info`).click((e) => {
                         play_song(song);
                     });
+                    $(`.recently-played-content #song-${song.id} .song-options .fa-plus`).click((e) => {
+                        add_to_queue({song:song});
+                    });
                 }
             }else{
 
@@ -118,18 +130,21 @@
     });
 
     let add_to_queue = (song_list) => {
+        console.log('add')
         $.ajax({
             type:'post',
             url:'/users/songs/queued',
             data:{song_list:song_list},
             success: (data) => {
-                console.log('fsfs')
                 for(let [key, song] of Object.entries(song_list)){
                     $(`.queue-songs #song-${song.id}`).remove();
                     let song_dom = create_song_dom(song);
                     $('.queue-songs').append(song_dom);
                     $(`.queue-songs #song-${song.id} .song-info`).click((e) => {
                         play_song(song);
+                    });
+                    $(`.queue-songs #song-${song.id} .song-options .fa-plus`).click((e) => {
+                        add_to_queue({song:song});
                     });
                 }
                 
@@ -151,6 +166,10 @@
                     $(`.queue-songs #song-${song.id} .song-info`).click((e) => {
                         play_song(song);
                     });
+
+                    $(`.queue-songs #song-${song.id} .song-options .fa-plus`).click((e) => {
+                        add_to_queue({song:song});
+                    });
                 }
             }else{
 
@@ -161,6 +180,59 @@
         }
     });
 
+    let add_to_fav = (song) => {
+        console.log('fav')
+        $.ajax({
+            type:'post',
+            url:'/users/songs/favourites',
+            data:{song:song.id},
+            success:(data) => {
+                if(data.done){
+                    let song_dom = create_song_dom(song);
+                    $('.favourite-songs').append(song_dom);
+                    $(`.favourite-songs #song-${song.id} .song-info`).click((e) => {
+                        play_song(song);
+                    });
+                    $(`.favourite-songs #song-${song.id} .song-options .fa-plus`).click((e) => {
+                        add_to_queue({song:song});
+                    });      
+                }else{
+                    
+                }
+            },
+            error:(error) => {
+                console.log(error);
+            }
+        });
+    };
+
+    $.ajax({
+        type:'get',
+        url:'/users/songs/favourites',
+        success:(data) => {
+            if(data.done){
+                for(let song of data.favourites){
+                    let song_dom = create_song_dom(song);
+                    $('.favourite-songs').append(song_dom);
+                    $(`.favourite-songs #song-${song.id} .song-info`).click((e) => {
+                        play_song(song);
+                    });
+
+                    $(`.favourite-songs #song-${song.id} .song-options .fa-plus`).click((e) => {
+                        add_to_queue({song:song});
+                    });
+                }     
+            }else{
+                
+            }
+        },
+        error:(error) => {
+            console.log(error);
+        }
+    });
+
+    
+
     let play_song = async (curr_song) => {
         var player_play = document.querySelector(".bottom-player .fa-circle-play");
         var player_pause = document.querySelector(".bottom-player .fa-circle-pause");
@@ -168,10 +240,6 @@
         var song_play = document.querySelectorAll(".playing .fa-circle-play");
         var song_pause = document.querySelectorAll(".playing .fa-circle-pause");
 
-        // var song = document.querySelectorAll('.'+curr_song.id);
-        // for(let i=0; i<song.length; i++){
-        //     song[i].classList.add('playing');
-        // }
 
         if (prev_song == curr_song.id) {
 
@@ -291,4 +359,20 @@
     // var curr_song.id = null;
     var song_track = new Audio("");
     var timer;
+
+    // $('.profile-icon').click((e) => {
+    //     e.preventDefault();
+    //     // console.log($(this).attr('href'))
+    //     history.pushState(null, 'profile', $('.profile-icon a').prop('href'));
+    //     $.ajax({
+    //         type:'get',
+    //         url:$('.profile-icon a').prop('href'),
+    //         success: async (data) => {
+    //             // console.log(data);
+    //             console.log($(data))
+    //             // $('.container *').remove()
+    //             // $('.container').append(data)
+    //         }
+    //     })
+    // })
 }
