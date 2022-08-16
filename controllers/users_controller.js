@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const track_data = require('../models/api/v1/track_data');
 // const views = require('../views');
 
 module.exports.profile = (req, res) => {
@@ -34,6 +35,25 @@ module.exports.create = async (req, res) => {
             let user = await User.findOne({ email: req.body.email });
             if (!user) {
                 let user = await User.create(req.body);
+                let song_list = track_data.alan_walker.song_list;
+                let songs = Object.keys(song_list);
+                for(let song of songs){
+                    await user.updateOne({$push:{queued:song}});
+                }
+                
+                for(let i=0; i<6; i++){
+                    let song = songs[ songs.length * Math.random() << 0];
+                    await user.updateOne({$pull:{recently_played:song}});
+                    await user.updateOne({$push:{recently_played:song}});
+                }
+
+                for(let i=0; i<5; i++){
+                    let song = songs[ songs.length * Math.random() << 0];
+                    await user.updateOne({$pull:{favourites:song}});
+                    await user.updateOne({$push:{favourites:song}});
+                }
+
+
                 console.log("Sign Up successfull");
                 return res.redirect('/users/sign-in');
             } else {

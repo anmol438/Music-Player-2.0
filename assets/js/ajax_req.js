@@ -14,7 +14,7 @@
                 let song_dom = create_song_dom(song);
                 $('#song-container').append(song_dom);
                 $(`#song-container #song-${song.id} .song-info`).click((e) => {
-                    if(curr_song.id != song.id){
+                    if(curr_song && curr_song.id != song.id){
                         add_to_queue(song_list);
                     }
                     play_song(song);
@@ -86,19 +86,33 @@
             url:'/users/songs/recently-played',
             data:{song:song.id},
             success:(data)=>{
-                if(data.done){
-                    $(`.recently-played-content #song-${song.id}`).remove();
-                    let song_dom = create_song_dom(song);
-                    $('.recently-played-content').append(song_dom);
-                    $(`.recently-played-content #song-${song.id} .song-info`).click((e) => {
-                        play_song(song);
+                if(!data.done){
+                    let recently_played = JSON.parse(sessionStorage.getItem('recently-played'));
+                    if (recently_played == null) {
+                        sessionStorage.setItem('recently-played', JSON.stringify([]));
+                        recently_played = JSON.parse(sessionStorage.getItem('recently-played'));
+                    }
+                    let ind = recently_played.findIndex((element)=>{
+                        return element.id == song.id;
                     });
-                    $(`.recently-played-content #song-${song.id} .song-options .fa-plus`).click((e) => {
-                        add_to_queue({song:song});
-                    });
-                }else{
-
+                    console.log(ind);
+                    if (ind != -1) {
+                        recently_played.splice(ind,1);
+                    }
+                    recently_played.push(song);
+                    sessionStorage.setItem('recently-played', JSON.stringify(recently_played));
                 }
+                
+
+                $(`.recently-played-content #song-${song.id}`).remove();
+                let song_dom = create_song_dom(song);
+                $('.recently-played-content').append(song_dom);
+                $(`.recently-played-content #song-${song.id} .song-info`).click((e) => {
+                    play_song(song);
+                });
+                $(`.recently-played-content #song-${song.id} .song-options .fa-plus`).click((e) => {
+                    add_to_queue({song:song});
+                });
             },
             error:(error) => {
                 console.log("Error in recently played ---> ", error);
@@ -110,30 +124,34 @@
         type:'get',
         url:'/users/songs/recently-played',
         success: (data) => {
+            let recently_played;
             if(data.done){
-                curr_song = data.recently_played[data.recently_played.length-1];
-                /// Bottom player display ////
-
-                let bottom_player = document.querySelector('.bottom-player');
-
-                if (!curr_song) {
-                    bottom_player.style.display = 'none';
-                } else {
-                    song_track.src = curr_song.path;
-                    update_player(curr_song);
-                }
-                for(let song of data.recently_played){
-                    let song_dom = create_song_dom(song);
-                    $('.recently-played-content').append(song_dom);
-                    $(`.recently-played-content #song-${song.id} .song-info`).click((e) => {
-                        play_song(song);
-                    });
-                    $(`.recently-played-content #song-${song.id} .song-options .fa-plus`).click((e) => {
-                        add_to_queue({song:song});
-                    });
-                }
+                recently_played = data.recently_played;
             }else{
+                recently_played = JSON.parse(sessionStorage.getItem('recently-played'));
+            }
+            
+            curr_song = recently_played[recently_played.length-1];
+            /// Bottom player display ////
 
+            let bottom_player = document.querySelector('.bottom-player');
+
+            if (!curr_song) {
+                bottom_player.style.display = 'none';
+            } else {
+                song_track.src = curr_song.path;
+                update_player(curr_song);
+            }
+
+            for(let song of recently_played){
+                let song_dom = create_song_dom(song);
+                $('.recently-played-content').append(song_dom);
+                $(`.recently-played-content #song-${song.id} .song-info`).click((e) => {
+                    play_song(song);
+                });
+                $(`.recently-played-content #song-${song.id} .song-options .fa-plus`).click((e) => {
+                    add_to_queue({song:song});
+                });
             }
         },
         error:(error) => {
