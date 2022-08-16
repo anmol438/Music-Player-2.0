@@ -131,7 +131,7 @@ a {
 
 .search-bar {
   margin: 0px 10px;
-  padding: 15px 20px;
+  padding: 8px 20px;
   display: flex;
   background: transparent;
   border-radius: 18px;
@@ -163,7 +163,16 @@ a {
 }
 
 .profile-icon i {
-  font-size: 20px;
+  font-size: 30px;
+}
+
+.sign-out-icon {
+  /* border: 2px solid red; */
+  margin-left: 10px;
+}
+
+.sign-out-icon i {
+  font-size: 30px;
 }
 
 /* Container */
@@ -286,7 +295,7 @@ a {
   flex-wrap: wrap;
   /* align-items: center; */
   /* justify-content: space-between; */
-  justify-content: center;
+  justify-content: space-between;
   overflow: visible;
 }
 

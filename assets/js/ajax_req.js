@@ -1,6 +1,7 @@
 {
     let album_id = $('.album-description').prop('id');
     let song_list;
+    var curr_song;
 
     $.ajax({
         type:'get',
@@ -13,7 +14,7 @@
                 let song_dom = create_song_dom(song);
                 $('#song-container').append(song_dom);
                 $(`#song-container #song-${song.id} .song-info`).click((e) => {
-                    if(prev_song != song.id){
+                    if(curr_song.id != song.id){
                         add_to_queue(song_list);
                     }
                     play_song(song);
@@ -79,21 +80,21 @@
     }
 
 
-    let add_to_recently_played = (curr_song) => {
+    let add_to_recently_played = (song) => {
         $.ajax({
             type:'post',
             url:'/users/songs/recently-played',
-            data:{song:curr_song.id},
+            data:{song:song.id},
             success:(data)=>{
                 if(data.done){
-                    $(`.recently-played-content #song-${curr_song.id}`).remove();
-                    let song_dom = create_song_dom(curr_song);
+                    $(`.recently-played-content #song-${song.id}`).remove();
+                    let song_dom = create_song_dom(song);
                     $('.recently-played-content').append(song_dom);
-                    $(`.recently-played-content #song-${curr_song.id} .song-info`).click((e) => {
-                        play_song(curr_song);
+                    $(`.recently-played-content #song-${song.id} .song-info`).click((e) => {
+                        play_song(song);
                     });
-                    $(`.recently-played-content #song-${curr_song.id} .song-options .fa-plus`).click((e) => {
-                        add_to_queue({song:curr_song});
+                    $(`.recently-played-content #song-${song.id} .song-options .fa-plus`).click((e) => {
+                        add_to_queue({song:song});
                     });
                 }else{
 
@@ -108,8 +109,19 @@
     $.ajax({
         type:'get',
         url:'/users/songs/recently-played',
-        success:(data) => {
+        success: (data) => {
             if(data.done){
+                curr_song = data.recently_played[data.recently_played.length-1];
+                /// Bottom player display ////
+
+                let bottom_player = document.querySelector('.bottom-player');
+
+                if (!curr_song) {
+                    bottom_player.style.display = 'none';
+                } else {
+                    song_track.src = curr_song.path;
+                    update_player(curr_song);
+                }
                 for(let song of data.recently_played){
                     let song_dom = create_song_dom(song);
                     $('.recently-played-content').append(song_dom);
@@ -130,7 +142,6 @@
     });
 
     let add_to_queue = (song_list) => {
-        console.log('add')
         $.ajax({
             type:'post',
             url:'/users/songs/queued',
@@ -233,7 +244,8 @@
 
     
 
-    let play_song = async (curr_song) => {
+    let play_song = async (song) => {
+
         var player_play = document.querySelector(".bottom-player .fa-circle-play");
         var player_pause = document.querySelector(".bottom-player .fa-circle-pause");
 
@@ -241,7 +253,7 @@
         var song_pause = document.querySelectorAll(".playing .fa-circle-pause");
 
 
-        if (prev_song == curr_song.id) {
+        if (curr_song && curr_song.id == song.id) {
 
 
             // console.log(curr_song.id)
@@ -256,7 +268,7 @@
                 }
 
             } else {
-                song_track.pause();
+                await song_track.pause();
                 player_play.style.display = 'block';
                 player_pause.style.display = 'none';
 
@@ -268,22 +280,26 @@
             }
         } else {
             // song_track.pause();
-            song_track.src = curr_song.path;
+            song_track.src = song.path;
             await song_track.play();
 
-            update_player(curr_song);
+            update_player(song);
 
-            add_to_recently_played(curr_song);
+            add_to_recently_played(song);
             // add_to_queue(curr_song.id);
 
             player_pause.style.display = 'block';
             player_play.style.display = 'none';
 
-            var prev_play = document.querySelectorAll('.' + prev_song);
-            var curr_play = document.querySelectorAll('.' + curr_song.id);
-            for (let i = 0; i < prev_play.length; i++) {
-                prev_play[i].classList.remove('playing');
+            var prev_play;
+            if(curr_song){
+                prev_play = document.querySelectorAll('.' + curr_song.id);
+                for (let i = 0; i < prev_play.length; i++) {
+                    prev_play[i].classList.remove('playing');
+                }
             }
+            var curr_play = document.querySelectorAll('.' + song.id);
+            
             for (let i = 0; i < curr_play.length; i++) {
                 curr_play[i].classList.add('playing');
             }
@@ -295,16 +311,62 @@
                 song_pause[i].style.display = 'block';
                 song_play[i].style.display = 'none';
             }
-
-
-
         }
-        prev_song = curr_song.id;
+
+        curr_song = song;
         return;
         
     }
 
-    let update_player = (curr_song) => {
+        let play_next = () => {
+            $.ajax({
+                type:'get',
+                url:'/users/songs/queued',
+                success:(data) => {
+                    if(data.done){
+                        let queue = data.queued;
+                        for(let i=0; i<queue.length; i++){
+                            if(queue[i].id == curr_song.id){
+                                play_song(queue[(i+1)%queue.length]);
+                                break;
+                            }
+                        }
+                    }else{
+        
+                    }
+                },
+                error:(error) => {
+                    console.log(error.responseText);
+                }
+            });
+
+    }
+
+    let play_prev = () => {
+        $.ajax({
+            type:'get',
+            url:'/users/songs/queued',
+            success:(data) => {
+                if(data.done){
+                    let queue = data.queued;
+                    for(let i=0; i<queue.length; i++){
+                        if(queue[(i+1)%queue.length].id == curr_song.id){
+                            play_song(queue[i]);
+                            break;
+                        }
+                    }
+                }else{
+    
+                }
+            },
+            error:(error) => {
+                console.log(error.responseText);
+            }
+        });
+
+    }
+
+    let update_player = (song) => {
         var bottom_player = document.querySelector('.bottom-player');
 
         bottom_player.style.display = 'flex';
@@ -320,7 +382,7 @@
         time_slider.value = 0;
 
 
-        song_name.textContent = curr_song.name;
+        song_name.textContent = song.name;
         // song_img.style.background_image = "";
 
 
@@ -355,24 +417,59 @@
         return min + ':' + sec;
     }
 
-    var prev_song = null;
     // var curr_song.id = null;
-    var song_track = new Audio("");
+    var song_track = new Audio();
     var timer;
 
-    // $('.profile-icon').click((e) => {
-    //     e.preventDefault();
-    //     // console.log($(this).attr('href'))
-    //     history.pushState(null, 'profile', $('.profile-icon a').prop('href'));
-    //     $.ajax({
-    //         type:'get',
-    //         url:$('.profile-icon a').prop('href'),
-    //         success: async (data) => {
-    //             // console.log(data);
-    //             console.log($(data))
-    //             // $('.container *').remove()
-    //             // $('.container').append(data)
-    //         }
-    //     })
-    // })
+   /// Event listener for song end ///
+
+    song_track.addEventListener('ended', () => {
+        setTimeout(() => {
+            play_next();
+        }, 1000);
+    })
+
+
+
+
+
+//// Event listener for change in time slider ////
+
+    var time_slider = document.querySelector('.bottom-player .time-slider');
+    time_slider.addEventListener('change', function () {
+        song_track.currentTime = time_slider.value;
+        document.querySelector('.bottom-player .current-time').textContent = time_conversion(song_track.currentTime);
+    });
+
+
+    /// Event listner for change in volume slider ///
+
+    var volume_slider = document.querySelector('.bottom-player .volume-slider');
+
+    volume_slider.addEventListener('change', function () {
+        song_track.volume = volume_slider.value / 100;
+    });
+
+    /// Event listener for play-pause button ///
+
+    $('.bottom-player .play-pause').click(() => {
+        play_song(curr_song);
+    })
+
+    /// Event listner for next button ///
+
+    // var next = document.querySelector('.bottom-player .fa-step-forward');
+    // next.addEventListener('click', play_next);
+
+    $('.bottom-player .fa-step-forward').click(()=>{
+        play_next();
+    })
+
+    /// Event listner for prev button ///
+
+    // var prev = document.querySelector('.bottom-player .fa-step-backward');
+    // prev.addEventListener('click', play_prev);
+    $('.bottom-player .fa-step-backward').click(()=>{
+        play_prev();
+    })
 }

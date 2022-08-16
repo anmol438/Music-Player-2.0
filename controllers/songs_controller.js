@@ -2,9 +2,10 @@ const User = require('../models/user');
 const track_data = require('../models/api/v1/track_data');
 
 module.exports.playlist =  (req, res) => {
+    let album = track_data[req.params.album].name
     return res.render('song_playlist', {
         album:req.params.album,
-        title:'Playlist'
+        title: album
     });
 };
 

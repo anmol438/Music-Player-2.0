@@ -2,17 +2,21 @@ const User = require('../models/user');
 // const views = require('../views');
 
 module.exports.profile = (req, res) => {
-    if(req.xhr){
-        return res.send('user_profile');
-    }
+    return res.render('user_profile', {
+        title:"Paradoxio | Profile"
+    });
 }
 
 module.exports.sign_in = (req, res) => {
-    return res.render('user_sign_in');
+    return res.render('user_sign_in', {
+        title:'Paradoxio | Sign-In'
+    });
 }
 
 module.exports.sign_up = (req, res) => {
-    return res.render('user_sign_up');
+    return res.render('user_sign_up',{
+        title:'Paradoxio | Sign-Up'
+    });
 }
 
 module.exports.create_session = (req, res) => {
