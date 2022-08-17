@@ -50,8 +50,25 @@ module.exports.get_recently_played = async (req, res) => {
                recently_played:data
             });
         }else{
+
+            let song_list = track_data.alan_walker.song_list;
+            let songs = Object.keys(song_list);
+            let data = [];
+            for(let i=0; i<6; i++){
+                
+                let song = song_list[songs[ songs.length * Math.random() << 0]];
+
+                let ind = data.findIndex((element)=>{
+                    return element.id == song.id;
+                });
+                if (ind == -1) {
+                    data.push(song);
+                }
+            }
+
             return res.status(200).json({
-                done:false
+                done:false,
+                recently_played:data
             });
         }
         
@@ -98,8 +115,16 @@ module.exports.get_queued = async (req, res) => {
                queued:data
             });
         }else{
+
+            let song_list = track_data.alan_walker.song_list;
+            let data = [];
+            for(let [key, song] of Object.entries(song_list)){
+                data.push(song);
+            }
+
             return res.status(200).json({
-                done:false
+                done:false,
+                queued:data
             });
         }
         

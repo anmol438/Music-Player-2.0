@@ -95,7 +95,6 @@
                     let ind = recently_played.findIndex((element)=>{
                         return element.id == song.id;
                     });
-                    console.log(ind);
                     if (ind != -1) {
                         recently_played.splice(ind,1);
                     }
@@ -129,6 +128,10 @@
                 recently_played = data.recently_played;
             }else{
                 recently_played = JSON.parse(sessionStorage.getItem('recently-played'));
+                if(!recently_played){
+                    sessionStorage.setItem('recently-played', JSON.stringify(data.recently_played));
+                    recently_played = JSON.parse(sessionStorage.getItem('recently-played'));
+                }
             }
             
             curr_song = recently_played[recently_played.length-1];
@@ -165,6 +168,26 @@
             url:'/users/songs/queued',
             data:{song_list:song_list},
             success: (data) => {
+
+                if(!data.done){
+                    let queued = JSON.parse(sessionStorage.getItem('queued'));
+                    if (!queued) {
+                        sessionStorage.setItem('queued', JSON.stringify([]));
+                        queued = JSON.parse(sessionStorage.getItem('queued'));
+                    }
+
+                    for(let [key, song] of Object.entries(song_list)){
+                        let ind = queued.findIndex((element)=>{
+                            return element.id == song.id;
+                        });
+                        if (ind != -1) {
+                            queued.splice(ind,1);
+                        }
+                        queued.push(song);
+                    }
+                    sessionStorage.setItem('queued', JSON.stringify(queued));
+                }
+                
                 for(let [key, song] of Object.entries(song_list)){
                     $(`.queue-songs #song-${song.id}`).remove();
                     let song_dom = create_song_dom(song);
@@ -188,20 +211,27 @@
         type:'get',
         url:'/users/songs/queued',
         success:(data) => {
+            let queued;
             if(data.done){
-                for(let song of data.queued){
-                    let song_dom = create_song_dom(song);
-                    $('.queue-songs').append(song_dom);
-                    $(`.queue-songs #song-${song.id} .song-info`).click((e) => {
-                        play_song(song);
-                    });
-
-                    $(`.queue-songs #song-${song.id} .song-options .fa-plus`).click((e) => {
-                        add_to_queue({song:song});
-                    });
-                }
+                queued = data.queued;
             }else{
+                queued = JSON.parse(sessionStorage.getItem('queued'));
+                if(!queued){
+                    sessionStorage.setItem('queued', JSON.stringify(data.queued));
+                    queued = JSON.parse(sessionStorage.getItem('queued'));
+                }
+            }
 
+            for(let song of queued){
+                let song_dom = create_song_dom(song);
+                $('.queue-songs').append(song_dom);
+                $(`.queue-songs #song-${song.id} .song-info`).click((e) => {
+                    play_song(song);
+                });
+
+                $(`.queue-songs #song-${song.id} .song-options .fa-plus`).click((e) => {
+                    add_to_queue({song:song});
+                });
             }
         },
         error:(error) => {
