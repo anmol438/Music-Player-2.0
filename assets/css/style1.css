@@ -2,7 +2,7 @@
 
 .album-description {
   /* border: 1px solid red; */
-  height: 17.5vw;
+  height: 280px;
   width: 100%;
   min-height: 200px;
   /* background-color: #1b205ee6; */
@@ -16,8 +16,8 @@
 
 .album-image {
   /* border: 1px solid red; */
-  width: 25%;
-  min-width: 200px;
+  width: 280px;
+  min-width: 280px;
   height: 100%;
 
   /* display: inline-block; */
@@ -50,7 +50,7 @@
 
 .song-list {
   /* border: 1px solid red; */
-  height: 550px;
+  height: 50vh;
   /* width: 100%; */
   margin: 10px 0px;
 

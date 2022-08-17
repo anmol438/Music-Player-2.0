@@ -394,16 +394,22 @@
                 type:'get',
                 url:'/users/songs/queued',
                 success:(data) => {
+                    let queued;
                     if(data.done){
-                        let queue = data.queued;
-                        for(let i=0; i<queue.length; i++){
-                            if(queue[i].id == curr_song.id){
-                                play_song(queue[(i+1)%queue.length]);
-                                break;
-                            }
-                        }
+                        queued = data.queued;
                     }else{
-        
+                        queued = JSON.parse(sessionStorage.getItem('queued'));
+                        if(!queued){
+                            sessionStorage.setItem('queued', JSON.stringify(data.queued));
+                            queued = JSON.parse(sessionStorage.getItem('queued'));
+                        }
+                    }
+
+                    for(let i=0; i<queued.length; i++){
+                        if(queued[i].id == curr_song.id){
+                            play_song(queued[(i+1)%queued.length]);
+                            break;
+                        }
                     }
                 },
                 error:(error) => {
@@ -418,16 +424,22 @@
             type:'get',
             url:'/users/songs/queued',
             success:(data) => {
+                let queued;
                 if(data.done){
-                    let queue = data.queued;
-                    for(let i=0; i<queue.length; i++){
-                        if(queue[(i+1)%queue.length].id == curr_song.id){
-                            play_song(queue[i]);
-                            break;
-                        }
-                    }
+                    queued = data.queued;
                 }else{
-    
+                    queued = JSON.parse(sessionStorage.getItem('queued'));
+                    if(!queued){
+                        sessionStorage.setItem('queued', JSON.stringify(data.queued));
+                        queued = JSON.parse(sessionStorage.getItem('queued'));
+                    }
+                }
+
+                for(let i=0; i<queued.length; i++){
+                    if(queued[(i+1)%queued.length].id == curr_song.id){
+                        play_song(queued[i]);
+                        break;
+                    }
                 }
             },
             error:(error) => {
