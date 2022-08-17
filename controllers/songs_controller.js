@@ -136,20 +136,18 @@ module.exports.post_favourites = async (req, res) => {
         if(req.isAuthenticated()){
             let song = req.body.song;
             let user = await User.findById(req.user._id);
-            if(user.favourites.findIndex((element) => {
-                return (song==element);
-            }) == -1){
-                await user.updateOne({$push:{favourites:song}});  
-                return res.status(200).json({
-                    done:true,
-                    favourites:user.favourites
-                 });          
-            }
-        }
+            await user.updateOne({$pull:{favourites:song}});          
+            await user.updateOne({$push:{favourites:song}});          
+
+            return res.status(200).json({
+                done:true,
+                favourites:user.favourites
+             });  
+        }else{
             return res.status(200).json({
                 done:false
             });
-        
+        }
     }
 };
 
@@ -171,8 +169,25 @@ module.exports.get_favourites = async (req, res) => {
                favourites:data
             });
         }else{
+
+            let song_list = track_data.alan_walker.song_list;
+            let songs = Object.keys(song_list);
+            let data = [];
+            for(let i=0; i<5; i++){
+                
+                let song = song_list[songs[ songs.length * Math.random() << 0]];
+
+                let ind = data.findIndex((element)=>{
+                    return element.id == song.id;
+                });
+                if (ind == -1) {
+                    data.push(song);
+                }
+            }
+
             return res.status(200).json({
-                done:false
+                done:false,
+                favourites:data
             });
         }
         

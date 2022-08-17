@@ -246,18 +246,33 @@
             url:'/users/songs/favourites',
             data:{song:song.id},
             success:(data) => {
-                if(data.done){
-                    let song_dom = create_song_dom(song);
-                    $('.favourite-songs').append(song_dom);
-                    $(`.favourite-songs #song-${song.id} .song-info`).click((e) => {
-                        play_song(song);
+
+                if(!data.done){
+                    let favourites = JSON.parse(sessionStorage.getItem('favourites'));
+                    if (!favourites) {
+                        sessionStorage.setItem('favourites', JSON.stringify([]));
+                        favourites = JSON.parse(sessionStorage.getItem('favourites'));
+                    }
+                    let ind = favourites.findIndex((element)=>{
+                        return element.id == song.id;
                     });
-                    $(`.favourite-songs #song-${song.id} .song-options .fa-plus`).click((e) => {
-                        add_to_queue({song:song});
-                    });      
-                }else{
-                    
+                    if (ind != -1) {
+                        favourites.splice(ind,1);
+                    }
+                    favourites.push(song);
+                    sessionStorage.setItem('favourites', JSON.stringify(favourites));
                 }
+
+
+                $(`.favourite-songs #song-${song.id}`).remove();
+                let song_dom = create_song_dom(song);
+                $('.favourite-songs').append(song_dom);
+                $(`.favourite-songs #song-${song.id} .song-info`).click((e) => {
+                    play_song(song);
+                });
+                $(`.favourite-songs #song-${song.id} .song-options .fa-plus`).click((e) => {
+                    add_to_queue({song:song});
+                });
             },
             error:(error) => {
                 console.log(error);
@@ -269,20 +284,28 @@
         type:'get',
         url:'/users/songs/favourites',
         success:(data) => {
-            if(data.done){
-                for(let song of data.favourites){
-                    let song_dom = create_song_dom(song);
-                    $('.favourite-songs').append(song_dom);
-                    $(`.favourite-songs #song-${song.id} .song-info`).click((e) => {
-                        play_song(song);
-                    });
 
-                    $(`.favourite-songs #song-${song.id} .song-options .fa-plus`).click((e) => {
-                        add_to_queue({song:song});
-                    });
-                }     
+            let favourites;
+            if(data.done){
+                favourites = data.favourites;
             }else{
-                
+                favourites = JSON.parse(sessionStorage.getItem('favourites'));
+                if(!favourites){
+                    sessionStorage.setItem('favourites', JSON.stringify(data.favourites));
+                    favourites = JSON.parse(sessionStorage.getItem('favourites'));
+                }
+            }
+
+            for(let song of favourites){
+                let song_dom = create_song_dom(song);
+                $('.favourite-songs').append(song_dom);
+                $(`.favourite-songs #song-${song.id} .song-info`).click((e) => {
+                    play_song(song);
+                });
+
+                $(`.favourite-songs #song-${song.id} .song-options .fa-plus`).click((e) => {
+                    add_to_queue({song:song});
+                });
             }
         },
         error:(error) => {
