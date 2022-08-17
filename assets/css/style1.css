@@ -50,7 +50,7 @@
 
 .song-list {
   /* border: 1px solid red; */
-  height: 55%;
+  height: 550px;
   /* width: 100%; */
   margin: 10px 0px;
 
@@ -59,6 +59,7 @@
 .song {
   /* border: 1px solid black; */
   /* height: 80px; */
+  height: 70px;
   width: 100%;
   margin: 10px 0px;
   /* background-color: #272c58e6; */
@@ -91,8 +92,8 @@
 
 .song-image {
   /* border: 1px solid red; */
-  height: 60px;
-  width: 60px;
+  height: 55px;
+  width: 55px;
   background-image: url(/images/album-thumbnail/alan-walker.jpeg);
   background-size: contain;
   margin: 0px 10px;
@@ -136,15 +137,19 @@
   opacity: 1;
 }
 
-.song-list .song-details{
+.song-details{
   /* border: 1px solid black; */
-  width: 100%;
+  width: 50%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: left;
 
   position: relative;
+}
+
+.song-list .song-details{
+  width: 90%;
 }
 
 
@@ -203,3 +208,120 @@
   margin-top: 15px;
   height: 92%;
 }
+
+
+/* ****************** */
+
+@media (max-width: 1100px) {
+  .main{
+    width: 100%;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-size: medium;
+  }
+  .bottom-player{
+    width: 95%;
+  }
+  .aside{
+    display: none;
+  }
+
+
+  .song{
+    height: 70px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .song-info{
+    width: 90%;
+    height: auto;
+  }
+  .song-details{
+    flex-direction: column;
+  }
+
+  .song-name{
+    width: 100%;
+    display: block;
+    position: relative;
+    left: auto;
+    padding: 10px 0px 5px;
+  }
+
+  .song-list .song-artists{
+    width: 100%;
+    display: block;
+    position: relative;
+    left: auto;
+  }
+
+  .song-options{
+    padding: 0px;
+    text-align: right;
+    
+    padding-top: 10px;
+    padding-right: 10px;
+
+  }
+
+  .song-options i{
+    padding: 2px;
+  }
+
+}
+
+@media (max-width:850px){
+  .main{
+    font-size: small;
+  }
+
+  .bottom-player{
+    font-size: small;
+  }
+
+  .player-controls{
+    left: 35%;
+  }
+  
+}
+
+@media (max-width:600px) {
+  .main{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .bottom-player{
+    width: 99.5%;
+    left: 2px;
+  }
+
+  .song-playing{
+    width: 150px;
+  }
+
+}
+
+@media (max-width:500px) {
+  .current-time, p, .song-duration{
+    display: none;
+  }
+
+  .player-controls{
+    left: 65%;
+    width: 20%;
+  }
+
+  .player-controls i {
+    font-size: 20px;
+  }
+
+  .player-controls .fa-circle-play, .player-controls .fa-circle-pause  {
+    font-size: 35px;
+  }
+
+}
+
+/* *{
+  border: 1px solid red;
+} */
