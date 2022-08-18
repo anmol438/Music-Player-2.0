@@ -32,7 +32,7 @@ app.use(
         resave:false,
         saveUninitialized:false,
         cookie:{
-            maxAge: (1000*60)*30
+            maxAge: 1000*60*60*24*30
         },
         store: new mongodbStore({
             uri:'mongodb://localhost:27017/paradoxio-database',
