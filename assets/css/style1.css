@@ -275,6 +275,61 @@
     font-size: small;
   }
 
+  .showcase-albums {
+    height: 280px;
+  }
+
+  .album {
+    height: 180px;
+    width: 180px;
+  }
+
+  .release-image{
+    width: 70px;
+  }
+
+  .release-option i:hover .release-menu {
+    height: 65px;
+    font-size: 10px;
+    width: 120px;
+  }
+
+  .showcase-popular-artists {
+    /* border: 1px solid red; */
+    height: 200px;
+  }
+
+  .popular-artist {
+    margin: 0px 10px;
+    /* display: inline-block; */
+    flex-shrink: 0;
+    height: 120px;
+    width: 120px;
+  }
+
+  .showcase-radio-stations {
+    /* border: 1px solid red; */
+    height: 200px;
+  }
+
+  .radio-stations-content {
+    height: 160px;
+  }
+
+  .station{
+    width: 170px;
+  }
+
+  .radio{
+    width: 120px;
+  }
+
+  .genre {
+    height: 160px;
+    margin: 5px;
+  }
+
+
   .bottom-player{
     font-size: small;
   }
@@ -285,11 +340,82 @@
   
 }
 
-@media (max-width:600px) {
+@media (max-width:620px) {
+  .logo{
+    margin: 0px;
+  }
+  .logo img{
+    height: 50px;
+  }
+
+  .title{
+    /* padding-left: 10px; */
+    font-size: large;
+  }
+
+  .search-bar{
+    width: 180px;
+  }
+  .search-box{
+    font-size: 15px;
+    padding: 2px 2px;
+  }
+  .profile-icon i {
+    font-size: 20px;
+  }
+  .sign-out-icon i {
+    font-size: 20px;
+  }
+
   .main{
     padding-left: 10px;
     padding-right: 10px;
   }
+
+  .release-image{
+    width: 60px;
+    height: 60px;
+  }
+  .release-option i:hover .release-menu {
+    height: 55px;
+    font-size: 8px;
+    width: 120px;
+  }
+  .showcase-popular-artists {
+    /* border: 1px solid red; */
+    height: 200px;
+  }
+
+  .popular-artist {
+    margin: 0px 10px;
+    /* display: inline-block; */
+    flex-shrink: 0;
+    height: 120px;
+    width: 120px;
+  }
+
+  .showcase-radio-stations {
+    /* border: 1px solid red; */
+    height: 200px;
+  }
+
+  .radio-stations-content {
+    height: 160px;
+  }
+
+  .station{
+    width: 170px;
+  }
+
+  .radio{
+    width: 120px;
+  }
+
+  .genre {
+    height: 160px;
+    margin: 5px;
+  }
+
 
   .bottom-player{
     width: 99.5%;
@@ -303,7 +429,103 @@
 }
 
 @media (max-width:500px) {
-  .current-time, p, .song-duration{
+
+  .logo img{
+    height: 30px;
+  }
+
+  .title{
+    /* padding-left: 10px; */
+    font-size: medium;
+  }
+
+  .search-bar{
+    width: 100px;
+  }
+  .search-box{
+    font-size: 15px;
+    padding: 2px 2px;
+  }
+  .profile-icon i {
+    font-size: 15px;
+  }
+  .sign-out-icon i {
+    font-size: 15px;
+  }
+
+
+  .showcase-albums {
+    height: 200px;
+  }
+
+  .album {
+    height: 110px;
+    width: 110px;
+  }
+
+  .release-image{
+    width: 40px;
+    /* height: 50px; */
+  }
+
+  .release-option i, .release-option p{
+    padding-top: 10px;
+    font-size: 10px;
+    margin-top: 0px;
+  }
+
+  .release-option i:hover .release-menu {
+    height: 60px;
+    font-size: 8px;
+    width: 120px;
+  }
+
+  .showcase-popular-artists {
+    /* border: 1px solid red; */
+    height: 150px;
+  }
+
+  .popular-artist {
+    margin: 0px 10px;
+    /* display: inline-block; */
+    flex-shrink: 0;
+    height: 80px;
+    width: 80px;
+  }
+
+  .popular-artist p {
+    font-size: x-small;
+  }
+
+
+  .showcase-radio-stations {
+    /* border: 1px solid red; */
+    height: 150px;
+  }
+
+  .radio-stations-content {
+    height: 120px;
+  }
+
+  .station{
+    width: 100px;
+  }
+
+  .radio{
+    width: 80px;
+  }
+  .music-genres-content {
+    justify-content: space-between;
+  }
+
+  .genre {
+    height: 100px;
+    margin: 5px;
+  }
+
+
+
+  .current-time, .bottom-player p, .album-content p, .song-duration{
     display: none;
   }
 
