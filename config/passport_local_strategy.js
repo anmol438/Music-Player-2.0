@@ -46,7 +46,6 @@ passport.deserializeUser((user, done) => {
 
 passport.check_auth = (req, res, next) => {
     if (req.isAuthenticated()) {
-        console.log('check')
         return next();
     }
     return res.redirect('/users/sign-in');
