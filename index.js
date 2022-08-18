@@ -35,7 +35,7 @@ app.use(
             maxAge: 1000*60*60*24*30
         },
         store: new mongodbStore({
-            uri:'mongodb://localhost:27017/paradoxio-database',
+            uri:process.env.MONGODB_URI || 'mongodb://localhost:27017/paradoxio-database',
             autoRemove: 'disabled'
         },
         (err) => {
