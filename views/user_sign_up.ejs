@@ -27,6 +27,13 @@
                 </div>
                 <div class="primary-btn">
                     <button>Sign up</button>
+                    <div class="message">
+                        <% if(flash.error && flash.error.length > 0){ %> 
+                            <p>
+                                <%= flash.error %> 
+                            </p>
+                        <% } %> 
+                    </div>
                 </div>
             </form>
             <h3>Already have an account ?</h3>

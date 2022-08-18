@@ -21,7 +21,6 @@ module.exports.sign_up = (req, res) => {
 }
 
 module.exports.create_session = (req, res) => {
-    console.log("Logged In Successfully");
     return res.redirect('/');
 }
 
@@ -29,7 +28,7 @@ module.exports.create = async (req, res) => {
     try {
 
         if (req.body.password != req.body.confirm_password) {
-            console.log("Password does not match");
+            req.flash('error', "Password does not match");
             return res.redirect('back');
         } else {
             let user = await User.findOne({ email: req.body.email });
@@ -54,10 +53,9 @@ module.exports.create = async (req, res) => {
                 }
 
 
-                console.log("Sign Up successfull");
                 return res.redirect('/users/sign-in');
             } else {
-                console.log("User already exists");
+                req.flash('error', "User already exists");
                 return res.redirect('back');
             }
         }
@@ -75,7 +73,6 @@ module.exports.destroy_session = (req, res) => {
                 console.log("Error in logging out user ---> ", err);
                 return res.redirect('back');
             }
-            console.log("Successfully logged out");
     
         });
     }

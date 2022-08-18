@@ -65,6 +65,17 @@
     background-color: var(--theme-color3);
 }
 
+.primary-btn{
+    position: relative;
+    overflow: visible;
+}
+.message{
+    position: absolute;
+    top: 40px;
+    right: 2px;
+    color: red;
+}
+
 .bar{
     color: #555;
     width: 50%;
