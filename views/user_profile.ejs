@@ -1,11 +1,29 @@
-    
-<style>
-    h1{
-        margin: 50px;
-    }
-</style>
+<link rel="stylesheet" href="/css/profile.css">
 
-    <h1>Profile
-        <%= locals.user %> 
-    </h1>
+<div class="container">
+    <main class="main">
+        <div class="welcome">
+            <h1 class="title">Welcome to</h1>
+            <h1 class="title">Paradoxio</h1>
+        </div>
 
+        <div class="profile-container">
+            <div class="user-icon"><i class="fa-solid fa-circle-user"></i></div>
+            <div class="user-data">
+                <h4>My Profile</h4>
+                <h1>Name : <%= locals.user.name %> </h1>
+                <h2>Email : <%= locals.user.email %> </h2>
+            </div>
+        </div>
+
+        
+        <footer>
+            <hr >
+            <span>Paradoxio Copyright &copy; 2021, All Rights Reserved | </span><span><a
+                    href="https://github.com/anmol438/Music-Player-2.0.git"><i class="fa fa-github"
+                        aria-hidden="true"></i></a></span>
+        </footer>
+    </main>
+    <aside class="aside">
+    </aside>
+</div>

@@ -1,15 +1,42 @@
+<link rel="stylesheet" href="/css/profile.css">
 
-<div id="sign-in" style="margin: 100px;">
-    <form action="/users/create-session" method="post">
-        <input type="email" name="email" placeholder="Your Email-Id" required>
-        <input type="password" name="password" placeholder="Your Password" required>
-        <input type="submit" value="Sign In">
-    </form>
-</div>
+<div class="container">
+    <main class="main">
+        <div class="welcome">
+            <h1 class="title">Welcome to</h1>
+            <h1 class="title">Paradoxio</h1>
+        </div>
 
-<div>
-    <a href="/users/sign-up">
-        <button>Create new account</button>
-    </a>
-    
+        <div class="profile-container">
+            <form class="form" action="/users/create-session" method="post">
+                <!-- Credentials input -->
+                <div class="sign-in">
+                    <label>Email or Username</label>
+                    <input type="email" name="email" placeholder="Email/Username" required>
+                </div>
+                <div class="sign-in">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Your Password" required>
+                </div>
+                <div class="primary-btn">
+                    <button>Sign in</button>
+                </div>
+            </form>
+            <h3>New Here ?</h3>
+            <hr class="bar">
+            <a href="/users/sign-up" class="secondary-btn">
+                Create new account
+            </a>
+        </div>
+
+        
+        <footer>
+            <hr >
+            <span>Paradoxio Copyright &copy; 2021, All Rights Reserved | </span><span><a
+                    href="https://github.com/anmol438/Music-Player-2.0.git"><i class="fa fa-github"
+                        aria-hidden="true"></i></a></span>
+        </footer>
+    </main>
+    <aside class="aside">
+    </aside>
 </div>

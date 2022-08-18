@@ -34,6 +34,8 @@ html {
 body {
   /* background: none; */
   background: linear-gradient(-120deg, var(--theme-color7), var(--theme-color1) 60%);
+  /* background-image: url('/images/b2.jpg');
+  background-size: cover; */
   /* background-color: var(--theme-color1); */
   color: white;
   padding: 0px;
@@ -115,14 +117,13 @@ a {
 }
 
 
-.favourites-col {
+.title {
   display: flex;
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
   text-shadow: 2px 2px 2px blueviolet;
   font-size: x-large;
-
 }
 
 .favourites {
@@ -197,6 +198,7 @@ a {
   overflow-x: hidden;
   position: relative;
   /* margin-left: 50px; */
+
 }
 
 /* .main>div{
@@ -795,6 +797,13 @@ a {
 }
 
 
+footer{
+  text-align: center;
+  font-size: medium;
+  padding: 10px 0px;
+}
+
+
 /* Bottom space */
 .bottom-space {
   height: 100px;
@@ -921,6 +930,8 @@ a {
   /* border: 2px solid red; */
   width: 30%;
   padding: 80px 50px 0px 25px;
+
+  
 }
 
 .aside-content {
